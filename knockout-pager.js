@@ -17,9 +17,9 @@
         _.currentPage=ko.observable(1);
         _.framePagesCount=ko.observable();
         _.currentFramePages=ko.observableArray();
-        _.startPage=ko.observable(1);
-        _.endPage=ko.observable(5);
-        _.frame=ko.observable(1);
+        _.startPage=ko.observable(0);
+        _.endPage=ko.observable(0);
+        _.frame=ko.observable(0);
         _.totalPages=ko.computed(function() {
             return Math.ceil(_.itemCount()/_.pageSize());
         });
@@ -48,11 +48,7 @@
         }
 
         _.setPagesize=function(size) {
-            if(size>0) {
-                _.pageSize(size);
-            } else {
-                _.pageSize(5);
-            }
+            _.pageSize(size>0? size: 0);
             _.currentPage(0);
             _.updatePageNumbers(1);
         }
