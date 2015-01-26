@@ -53,6 +53,7 @@
             } else {
                 _.pageSize(5);
             }
+            _.currentPage(0);
             _.updatePageNumbers(1);
         }
 
