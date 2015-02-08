@@ -49,7 +49,11 @@
 
         _.setPagesize=function(size) {
             _.pageSize(size>0? size: 0);
+<<<<<<< HEAD
             _.currentPage(1);
+=======
+            _.currentPage(0);
+>>>>>>> FETCH_HEAD
             _.updatePageNumbers(1);
         }
 
