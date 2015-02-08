@@ -2,9 +2,9 @@
 // Author: Venkata Aditya Korada
 
 
-    var pager=function(itemCount) {
+    var pager=function() {
         var _=this;
-        _.itemCount=ko.observable(itemCount||0);
+        _.itemCount=ko.observable(0);
         _.pageSize=ko.observable(5);
         _.currentPage=ko.observable(1);
         _.framePagesCount=ko.observable();
@@ -93,4 +93,4 @@
         }
 
     }
-    ko.pager=function(itemCount) { return new pager(itemCount); }
+    ko.pager=function() { return new pager(); }
