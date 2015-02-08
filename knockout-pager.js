@@ -101,6 +101,6 @@
         }
 
     }
-    exports.pager=function(itemCount) { return new pager(itemCount); }
+    exports=function(itemCount) { return new pager(itemCount); }
 
 }));
