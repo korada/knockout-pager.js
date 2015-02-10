@@ -2,14 +2,14 @@
 // Author: Venkata Aditya Korada
 
 (function(pager) {
-    if(typeof require=="function"&&typeof exports==="object"&&typeof module==="object") {
-        pager(require("knockout"),exports);
+    if(typeof require=="function"&&typeof module==="object") {
+        pager(require("knockout"));
     } else if(typeof define=="function"&&define["amd"]) {
-        define(["knockout","exports"],pager);
+        define(["knockout"],pager);
     } else {
-        pager(ko,ko.pager=function() { });
+        pager(ko);
     }
-}(function(ko,exports) {
+}(function(ko) {
     var pager=function(itemcount) {
         var _=this;
         _.itemCount=ko.observable(itemcount||0);
@@ -103,6 +103,6 @@
         }
 
     }
-    exports=function (itemcount){return new pager(itemcount)}; 
+    ko.pager=function (itemcount){return new pager(itemcount)}; 
 
 }));
