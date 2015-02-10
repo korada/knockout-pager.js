@@ -32,7 +32,7 @@
         
 <h3>Knockout-Pager.js</h3>
 
-<p>Plugin to incorporate paging to any grid built using knockout. This plugin doesn't generate html, but will provide all the info to bind to any custom html.</p>
+<p>Plugin to incorporate paging to any grid built using knockout. This plugin doesn't generate html, but will provide all the methods to bind to any custom html.</p>
 
 <h3>How to add to your html?</h3>
 <pre>
@@ -73,28 +73,41 @@
   pager.hasPreviousFrame();
 
 </code></pre>
+<h4>Sample HTML</h4>
+<pre><code>
+  &lt;div class=&quot;pager&quot; id=&quot;#koPager&quot;&gt; 
+    &lt;button data-bind=&quot;click:pager.firstPage&quot;&gt; &lt;i class=&quot;fa fa-step-backward&quot;&gt;&lt;/i&gt; &lt;/button&gt; 
+    &lt;button data-bind=&quot;click: pager.previousPage&quot;&gt; &lt;i class=&quot;fa fa-caret-left&quot;&gt;&lt;/i&gt; &lt;/button&gt; 
+    &lt;button data-bind=&quot;click: pager.previousFrame&quot;&gt;...&lt;/button&gt; 
+    &lt;!--ko foreach: pager.currentFramePages()--&gt; 
+    &lt;button data-bind=&quot;text: $data, click: $parent.pager.setPage.bind($data), css: {'selected':$parent.pager.currentPage()==$data}&quot;&gt;&lt;/button&gt; 
+    &lt;!--/ko--&gt; 
+    &lt;button data-bind=&quot;click: pager.nextFrame&quot;&gt;...&lt;/button&gt; 
+    &lt;button data-bind=&quot;click:pager.nextPage&quot;&gt; &lt;i class=&quot;fa fa-caret-right&quot;&gt;&lt;/i&gt; &lt;/button&gt; 
+    &lt;button data-bind=&quot;click:pager.lastPage&quot;&gt; &lt;i class=&quot;fa fa-step-forward&quot;&gt;&lt;/i&gt; &lt; /button&gt; 
+  &lt;/div&gt;
 
+</code></pre>
+<h4>JS</h4>
+<pre><code>
+  
+  var vm= function(){
+    var self=this;
+  self.pager=ko.pager(0);
+  self.pager.framePagesCount(5);
+  self.pager.itemCount(10);
+  }
+
+ko.applyBindings(new vm(),document.getElementById("koPager"));
+</code></pre>
 <h3>Demo</h3>
 <div id="koPager">
-  <div class="pager">
-    <button data-bind="click:pager.firstPage()"> <i class="fa fa-step-backward"></i> </button>
-    <button data-bind="click: pager.previousPage()"> <i class="fa fa-caret-left"></i> </button>
-    <button>...</button>
-    <!--ko foreach: pager.currentFramePages()-->
-    <button data-bind="text: $data, click: $parent.pager.setPage.bind($data)"></button>
-    <!--/ko-->
-    <button>...</button>
-    <button data-bind="click:pager.nextPage()"> <i class="fa fa-caret-right"></i> </button>
-    <button data-bind="click:pager.lastPage()"> <i class="fa fa-step-forward"></i> </button>
-  </div>
-  <br>
-  <h4>Values</h4>
     <ul style="list-style:none;margin-left: -35px;">
       <li>
         <label>Item Count: </label><input type="text" data-bind="value:pager.itemCount"> 
       </li>
       <li>
-        <label>Current Page:</label><input type="text" data-bind="value:pager.currentPage" disabled="true">
+        <label>Current Page:</label><input type="text" data-bind="value:pager.currentPage()" disabled="true">
       </li>
       <li>
         <label for="">Page Size: </label><input type="text" data-bind="value:pager.pageSize">
@@ -102,7 +115,22 @@
       <li></li>
       <li></li>
     </ul>
+
+  <br>
+  <div class="pager">
+    <button data-bind="click:pager.firstPage"> <i class="fa fa-step-backward"></i> </button>
+    <button data-bind="click: pager.previousPage"> <i class="fa fa-caret-left"></i> </button>
+    <button data-bind="click: pager.previousFrame">...</button>
+    <!--ko foreach: pager.currentFramePages()-->
+    <button data-bind="text: $data, click: $parent.pager.setPage.bind($data), css: {'selected':$parent.pager.currentPage()==$data}"></button>
+    <!--/ko-->
+    <button data-bind="click: pager.nextFrame">...</button>
+    <button data-bind="click:pager.nextPage"> <i class="fa fa-caret-right"></i> </button>
+    <button data-bind="click:pager.lastPage"> <i class="fa fa-step-forward"></i> </button>
+  </div>
+  
 </div>
+
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/korada">korada</a></p>

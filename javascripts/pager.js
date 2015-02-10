@@ -1,7 +1,7 @@
 
 	var vm= function(){
 		var self=this;
-	self.pager=ko.pager();
+	self.pager=ko.pager(0);
 	self.pager.framePagesCount(5);
 	self.pager.itemCount(10);
 	}

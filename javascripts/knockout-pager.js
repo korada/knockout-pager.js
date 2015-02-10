@@ -1,10 +1,18 @@
 //Knockout Pager Plugin
 // Author: Venkata Aditya Korada
 
-
-    var pager=function() {
+(function(pager) {
+    if(typeof require=="function"&&typeof exports==="object"&&typeof module==="object") {
+        pager(require("knockout"),exports);
+    } else if(typeof define=="function"&&define["amd"]) {
+        define(["knockout","exports"],pager);
+    } else {
+        pager(ko,ko.pager=function() { });
+    }
+}(function(ko,exports) {
+    var pager=function(itemcount) {
         var _=this;
-        _.itemCount=ko.observable(0);
+        _.itemCount=ko.observable(itemcount||0);
         _.pageSize=ko.observable(5);
         _.currentPage=ko.observable(1);
         _.framePagesCount=ko.observable();
@@ -92,4 +100,6 @@
         }
 
     }
-    ko.pager=function (){return new pager()}; 
+    ko.pager=function (itemcount){return new pager(itemcount)}; 
+
+}));

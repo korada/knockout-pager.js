@@ -220,6 +220,9 @@ input{
   margin-left: 10px;
   text-align: center;
 }
+#koPager{
+  white-space: nowrap;
+}
 #koPager ul{
   width: 150px;
 }
