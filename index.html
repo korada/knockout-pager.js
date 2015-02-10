@@ -94,26 +94,33 @@
   var vm= function(){
     var self=this;
   self.pager=ko.pager(0);
-  self.pager.framePagesCount(5);
+  self.pager.frameSize(5);
   self.pager.itemCount(10);
   }
 
 ko.applyBindings(new vm(),document.getElementById("koPager"));
 </code></pre>
-<h3>Demo</h3>
+<h3>Interactive Demo</h3>
 <div id="koPager">
     <ul style="list-style:none;margin-left: -35px;">
       <li>
-        <label>Item Count: </label><input type="text" data-bind="value:pager.itemCount"> 
+        <label>Item Count (editable): </label><input type="text" data-bind="value:pager.itemCount">
+      </li>
+      <li>
+        <label >Page Size (editable): </label><input type="text" data-bind="value:pager.pageSize">
+      </li>
+      <li>
+        <label >Frame Size (editable): </label><input type="text" data-bind="value:pager.frameSize">
       </li>
       <li>
         <label>Current Page:</label><input type="text" data-bind="value:pager.currentPage()" disabled="true">
       </li>
       <li>
-        <label for="">Page Size: </label><input type="text" data-bind="value:pager.pageSize">
+        <label>Total Pages: </label><input type="text" data-bind="value:pager.totalPages" disabled="true">
       </li>
-      <li></li>
-      <li></li>
+      <li>
+        <label>Current Frame: </label><input type="text" data-bind="value:pager.frame" disabled="true">
+      </li>
     </ul>
 
   <br>

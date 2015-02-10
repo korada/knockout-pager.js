@@ -15,7 +15,7 @@
         _.itemCount=ko.observable(itemcount||0);
         _.pageSize=ko.observable(5);
         _.currentPage=ko.observable(1);
-        _.framePagesCount=ko.observable();
+        _.frameSize=ko.observable();
         _.currentFramePages=ko.observableArray();
         _.startPage=ko.observable(0);
         _.endPage=ko.observable(0);
@@ -28,9 +28,9 @@
             var i;
             _.currentFramePages.removeAll();
             if(pageNumber>0&&pageNumber<=_.totalPages()) {
-                _.frame(Math.ceil(pageNumber/_.framePagesCount()));
-                _.startPage(_.framePagesCount()*(_.frame()-1)+1);
-                _.endPage(_.framePagesCount()*(_.frame()-1)+_.framePagesCount());
+                _.frame(Math.ceil(pageNumber/_.frameSize()));
+                _.startPage(_.frameSize()*(_.frame()-1)+1);
+                _.endPage(_.frameSize()*(_.frame()-1)+_.frameSize());
                 if(_.endPage()>_.totalPages()) {
                     _.endPage(_.totalPages());
                 }
@@ -75,11 +75,11 @@
 
 
         _.hasNextFrame=function() {
-            return _.frame()>1&&_.totalPages()>_.framePagesCount();
+            return _.frame()>1&&_.totalPages()>_.frameSize();
         }
 
         _.hasPreviousFrame=function() {
-            return _.frame()>Math.ceil(_.totalPages()/_.framePagesCount())&&_.totalPages()>_.framePagesCount();
+            return _.frame()>Math.ceil(_.totalPages()/_.frameSize())&&_.totalPages()>_.frameSize();
         }
         _.itemCount.subscribe(function() {
             _.updatePageNumbers(1);
@@ -87,14 +87,17 @@
         _.currentPage.subscribe(function(val) {
             _.updatePageNumbers(val);
         });
+        _.frameSize.subscribe(function(){
+            _.updatePageNumbers(1);
+        });
         function changeFrame(direction) {
             if(direction=='left') {
                 if(_.frame()>1) {
-                    _.updatePageNumbers(_.framePagesCount()*(_.frame()-1));
+                    _.updatePageNumbers(_.frameSize()*(_.frame()-1));
                 }
             } else {
-                if(_.frame()<=Math.ceil(_.totalPages()/_.framePagesCount())) {
-                    _.updatePageNumbers(_.framePagesCount()*(_.frame())+1);
+                if(_.frame()<=Math.ceil(_.totalPages()/_.frameSize())) {
+                    _.updatePageNumbers(_.frameSize()*(_.frame())+1);
                 }
             }
         }
