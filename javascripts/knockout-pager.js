@@ -2,10 +2,10 @@
 // Author: Venkata Aditya Korada
 
 (function(pager) {
-    if(typeof require=="function"&&typeof exports==="object"&&typeof module==="object") {
-        pager(require("knockout"),exports);
+    if(typeof require=="function"&&typeof module==="object") {
+        pager(require("knockout"));
     } else if(typeof define=="function"&&define["amd"]) {
-        define(["knockout","exports"],pager);
+        define(["knockout"],pager);
     } else {
         pager(ko);
     }
