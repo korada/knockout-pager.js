@@ -103,6 +103,6 @@
         }
 
     }
-    ko.pager=function (itemcount){return new pager(itemcount)}; 
+    exports.pager=function (itemcount){return new pager(itemcount)}; 
 
 }));
