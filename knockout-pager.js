@@ -87,9 +87,6 @@
         _.currentPage.subscribe(function(val) {
             _.updatePageNumbers(val);
         });
-        _.frameSize.subscribe(function(){
-            _.updatePageNumbers(1);
-        });
         function changeFrame(direction) {
             if(direction=='left') {
                 if(_.frame()>1) {
