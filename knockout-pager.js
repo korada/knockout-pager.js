@@ -1,105 +1,106 @@
 //Knockout Pager Plugin
 // Author: Venkata Aditya Korada
 
-(function(pager) {
-    if(typeof require=="function"&&typeof module==="object") {
+(function (pager) {
+    if (typeof require == "function" && typeof module === "object") {
         pager(require("knockout"));
-    } else if(typeof define=="function"&&define["amd"]) {
-        define(["knockout"],pager);
+    } else if (typeof define == "function" && define["amd"]) {
+        define(["knockout"], pager);
     } else {
         pager(ko);
     }
-}(function(ko) {
-    var pager=function(itemcount) {
-        var _=this;
-        _.itemCount=ko.observable(itemcount||0);
-        _.pageSize=ko.observable(5);
-        _.currentPage=ko.observable(1);
-        _.frameSize=ko.observable();
-        _.currentFramePages=ko.observableArray();
-        _.startPage=ko.observable(0);
-        _.endPage=ko.observable(0);
-        _.frame=ko.observable(0);
-        _.totalPages=ko.computed(function() {
-            return Math.ceil(_.itemCount()/_.pageSize());
+}(function (ko) {
+    var pager = function (itemCount) {
+        var pg = this;
+        pg.itemCount = ko.observable(itemCount || 0);
+        pg.pageSize = ko.observable(5);
+        pg.currentPage = ko.observable(1);
+        pg.framePagesCount = ko.observable();
+        pg.currentFramePages = ko.observableArray();
+        pg.startPage = ko.observable(0);
+        pg.endPage = ko.observable(0);
+        pg.frame = ko.observable(0);
+        pg.totalPages = ko.computed(function () {
+            return Math.ceil(pg.itemCount() / pg.pageSize());
         });
         /*Functions*/
-        _.updatePageNumbers=function(pageNumber) {
+        pg.updatePageNumbers = function (pageNumber) {
             var i;
-            _.currentFramePages.removeAll();
-            if(pageNumber>0&&pageNumber<=_.totalPages()) {
-                _.frame(Math.ceil(pageNumber/_.frameSize()));
-                _.startPage(_.frameSize()*(_.frame()-1)+1);
-                _.endPage(_.frameSize()*(_.frame()-1)+_.frameSize());
-                if(_.endPage()>_.totalPages()) {
-                    _.endPage(_.totalPages());
+            pg.currentFramePages.removeAll();
+            if (pageNumber > 0 && pageNumber <= pg.totalPages()) {
+                pg.frame(Math.ceil(pageNumber / pg.framePagesCount()));
+                pg.startPage(pg.framePagesCount() * (pg.frame() - 1) + 1);
+                pg.endPage(pg.framePagesCount() * (pg.frame() - 1) + pg.framePagesCount());
+                if (pg.endPage() > pg.totalPages()) {
+                    pg.endPage(pg.totalPages());
                 }
             }
-            for(i=_.startPage() ;i<=_.endPage() ;i++) {
-                _.currentFramePages.push(i);
-            }
-        }
-        _.setPage=function(pageNumber) {
-            if(pageNumber<=_.totalPages()&&pageNumber>=1) {
-                _.currentPage(pageNumber);
-                _.updatePageNumbers(pageNumber);
+            for (i = pg.startPage() ; i <= pg.endPage() ; i++) {
+                pg.currentFramePages.push(i);
             }
         }
 
-        _.setPagesize=function(size) {
-            _.pageSize(size>0? size: 0);
-            _.currentPage(1);
-            _.updatePageNumbers(1);
+        pg.setPage = function (pageNumber) {
+            if (pageNumber <= pg.totalPages() && pageNumber >= 1) {
+                pg.currentPage(pageNumber);
+                pg.updatePageNumbers(pageNumber);
+            }
         }
 
-        _.firstPage=function() {
-            _.setPage(1);
-        }
-        _.lastPage=function() {
-            _.setPage(_.totalPages());
-        }
-
-        _.nextPage=function() {
-            _.setPage(_.currentPage()+1);
-        }
-        _.previousPage=function() {
-            _.setPage(_.currentPage()-1);
+        pg.setPagesize = function (size) {
+            pg.pageSize(size > 0 ? size : 0);
+            pg.currentPage(1);
+            pg.updatePageNumbers(1);
         }
 
-        _.nextFrame=function() {
+        pg.firstPage = function () {
+            pg.setPage(1);
+        }
+        pg.lastPage = function () {
+            pg.setPage(pg.totalPages());
+        }
+
+        pg.nextPage = function () {
+            pg.setPage(pg.currentPage() + 1);
+        }
+        pg.previousPage = function () {
+            pg.setPage(pg.currentPage() - 1);
+        }
+
+        pg.nextFrame = function () {
             changeFrame('right');
         }
-        _.previousFrame=function() {
+        pg.previousFrame = function () {
             changeFrame('left');
         }
 
 
-        _.hasNextFrame=function() {
-            return _.frame()>1&&_.totalPages()>_.frameSize();
+        pg.hasNextFrame = function () {
+            return pg.frame() >= 1 && pg.frame() < Math.ceil(pg.totalPages() / pg.framePagesCount());
         }
 
-        _.hasPreviousFrame=function() {
-            return _.frame()>Math.ceil(_.totalPages()/_.frameSize())&&_.totalPages()>_.frameSize();
+        pg.hasPreviousFrame = function () {
+            return pg.frame() <= Math.ceil(pg.totalPages() / pg.framePagesCount()) && pg.frame()!=1;
         }
-        _.itemCount.subscribe(function() {
-            _.updatePageNumbers(1);
+        pg.itemCount.subscribe(function () {
+            pg.updatePageNumbers(1);
         });
-        _.currentPage.subscribe(function(val) {
-            _.updatePageNumbers(val);
+        pg.currentPage.subscribe(function (val) {
+            pg.updatePageNumbers(val);
         });
         function changeFrame(direction) {
-            if(direction=='left') {
-                if(_.frame()>1) {
-                    _.updatePageNumbers(_.frameSize()*(_.frame()-1));
+            if (direction == 'left') {
+                if (pg.frame() > 1) {
+                    pg.updatePageNumbers(pg.framePagesCount() * (pg.frame() - 1));
                 }
             } else {
-                if(_.frame()<=Math.ceil(_.totalPages()/_.frameSize())) {
-                    _.updatePageNumbers(_.frameSize()*(_.frame())+1);
+                if (pg.frame() <= Math.ceil(pg.totalPages() / pg.framePagesCount())) {
+                    pg.updatePageNumbers(pg.framePagesCount() * (pg.frame()) + 1);
                 }
             }
         }
 
     }
-    ko.pager=function (itemcount){return new pager(itemcount)}; 
+    ko.pager = function (itemCount) { return new pager(itemCount); }
 
 }));
