@@ -10,12 +10,12 @@
         pager(ko);
     }
 }(function (ko) {
-    var pager = function (itemCount) {
+    var pager = function (itemCount,pageSize,frameSize) {
         var pg = this;
         pg.itemCount = ko.observable(itemCount || 0);
-        pg.pageSize = ko.observable(5);
+        pg.pageSize = ko.observable(pageSize||5);
         pg.currentPage = ko.observable(1);
-        pg.framePagesCount = ko.observable();
+        pg.framePagesCount = ko.observable(frameSize||1);
         pg.currentFramePages = ko.observableArray();
         pg.startPage = ko.observable(0);
         pg.endPage = ko.observable(0);
@@ -61,10 +61,10 @@
         }
 
         pg.nextPage = function () {
-            pg.setPage(pg.currentPage() + 1);
+            pg.setPage(parseInt(pg.currentPage()) + 1);
         }
         pg.previousPage = function () {
-            pg.setPage(pg.currentPage() - 1);
+            pg.setPage(parseInt(pg.currentPage()) - 1);
         }
 
         pg.nextFrame = function () {
@@ -101,6 +101,6 @@
         }
 
     }
-    ko.pager = function (itemCount) { return new pager(itemCount); }
+    ko.pager = function (itemCount,pageSize,frameSize) { return new pager(itemCount,pageSize,frameSize); }
 
 }));
